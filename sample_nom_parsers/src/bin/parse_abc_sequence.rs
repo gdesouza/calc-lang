@@ -1,8 +1,8 @@
 extern crate nom;
-use nom::{character::complete::char, sequence::tuple, Parser, IResult};
+use nom::{character::complete::char, Parser, IResult};
 
 fn parse_abc_sequence(input: &str) -> IResult<&str, (char, char, char)> {
-    tuple((char('a'), char('b'), char('c'))).parse(input)
+    (char('a'), char('b'), char('c')).parse(input)
 }
 
 fn main() {
