@@ -46,3 +46,7 @@ product := x * y
 - **`docs/`** — Grammar specification (BNF)
 - **`calc_parser/`** — Parser for the calc language (WIP)
 - **`sample_nom_parsers/`** — Sample parsers using [nom](https://crates.io/crates/nom)
+
+## References
+
+This project is based on [*Creative Projects for Rust Programmers*](https://www.packtpub.com/product/creative-projects-for-rust-programmers/9781789346220) by Carlo Milanesi (Packt). The book's source code is available at [PacktPublishing/Creative-Projects-for-Rust-Programmers](https://github.com/PacktPublishing/Creative-Projects-for-Rust-Programmers).
