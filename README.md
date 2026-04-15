@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/logo.png" alt="calc-lang logo" width="300">
+</p>
+
 # calc
 
 A toy programming language with a simple grammar, built in Rust.
