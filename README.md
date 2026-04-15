@@ -6,7 +6,7 @@ A toy programming language with a simple grammar, built in Rust.
 
 ## Language
 
-calc supports variable assignment, basic arithmetic expressions (`+`, `-`, `*`, `/`), reading input (`@`), and printing output (`<`). Variables are declared implicitly via assignment (`:=`).
+calc supports variable declaration (`@`), reading input (`>`), assignment (`:=`), basic arithmetic expressions (`+`, `-`, `*`, `/`), and printing output (`<`).
 
 ### Grammar
 
@@ -14,9 +14,9 @@ See [`docs/grammar.bnf`](docs/grammar.bnf) for the full BNF grammar.
 
 | Syntax | Meaning |
 |---|---|
+| `@ x` | Declare variable |
+| `> x` | Read input into variable |
 | `x := <expr>` | Assign expression to variable |
-| `@ x` | Read input into variable |
-| `> x` | (reserved) |
 | `< <expr>` | Print expression |
 
 ### Example Program
@@ -24,6 +24,11 @@ See [`docs/grammar.bnf`](docs/grammar.bnf) for the full BNF grammar.
 ```
 @ x
 @ y
+@ sum
+@ diff
+@ product
+> x
+> y
 sum := x + y
 diff := x - y
 product := x * y
