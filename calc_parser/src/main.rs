@@ -7,11 +7,11 @@ fn main() {
     if source_path.is_none() {
         eprintln!("Usage: {} <source_file>", current_program_path);
     } else {
-        process_file(&current_program_path, &source_path.unwrap());
+        process_file(&source_path.unwrap());
     }
 } 
 
-fn process_file(current_program_path: &str, source_path: &str) {
+fn process_file(source_path: &str) {
     const CALC_SUFFIX: &str = ".calc";
     if !source_path.ends_with(CALC_SUFFIX) {
         eprintln!("Error: Source file must have a '{}' extension.", CALC_SUFFIX);

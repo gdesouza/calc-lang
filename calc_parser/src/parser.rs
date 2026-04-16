@@ -7,7 +7,7 @@ use nom::{
     combinator::map,
     multi::many0,
     number::complete::double,
-    sequence::{delimited, preceded, tuple},
+    sequence::{delimited, preceded},
     Parser,
     IResult,
 };
@@ -45,7 +45,7 @@ pub enum ParsedStatement<'a> {
 
 pub type ParsedProgram<'a> = Vec<ParsedStatement<'a>>;
 
-pub fn parse_program(input: &str) -> IResult<&str, ParsedProgram> {
+pub fn parse_program(input: &str) -> IResult<&str, ParsedProgram<'_>> {
     many0(preceded(
         skip_spaces,
         alt((
@@ -57,22 +57,22 @@ pub fn parse_program(input: &str) -> IResult<&str, ParsedProgram> {
     )).parse(input)
 }
 
-fn parse_declaration(input: &str) -> IResult<&str, ParsedStatement> {
+fn parse_declaration(input: &str) -> IResult<&str, ParsedStatement<'_>> {
     (char('@'), skip_spaces, parse_identifier).parse(input)
         .map(|(input, output)| (input, ParsedStatement::Declaration(output.2)))
 }
 
-fn parse_input_statement(input: &str) -> IResult<&str, ParsedStatement> {
+fn parse_input_statement(input: &str) -> IResult<&str, ParsedStatement<'_>> {
     (char('>'), skip_spaces, parse_identifier).parse(input)
         .map(|(input, output)| (input, ParsedStatement::InputOperation(output.2)))
 }
 
-fn parse_output_statement(input: &str) -> IResult<&str, ParsedStatement> {
+fn parse_output_statement(input: &str) -> IResult<&str, ParsedStatement<'_>> {
     (char('<'), skip_spaces, parse_expr).parse(input)
         .map(|(input, output)| (input, ParsedStatement::OutputOperation(output.2)))
 }
 
-fn parse_assignment(input:&str) -> IResult<&str, ParsedStatement> {
+fn parse_assignment(input:&str) -> IResult<&str, ParsedStatement<'_>> {
     ( parse_identifier, 
       skip_spaces, 
       tag(":="),
@@ -86,7 +86,7 @@ fn parse_identifier(input: &str) -> IResult<&str, &str> {
     alpha1(input)
 }
 
-fn parse_subexpr(input: &str) -> IResult<&str, ParsedExpr> {
+fn parse_subexpr(input: &str) -> IResult<&str, ParsedExpr<'_>> {
     delimited(
         preceded(skip_spaces, char('(')),
         parse_expr,
@@ -94,7 +94,7 @@ fn parse_subexpr(input: &str) -> IResult<&str, ParsedExpr> {
     ).parse(input)
 }
 
-fn parse_factor(input: &str) -> IResult<&str, ParsedFactor> {
+fn parse_factor(input: &str) -> IResult<&str, ParsedFactor<'_>> {
     preceded(
         skip_spaces,
         alt((
@@ -107,7 +107,7 @@ fn parse_factor(input: &str) -> IResult<&str, ParsedFactor> {
     ).parse(input)
 }
 
-fn parse_term(input:&str) -> IResult<&str, ParsedTerm> {
+fn parse_term(input:&str) -> IResult<&str, ParsedTerm<'_>> {
     (
         parse_factor,
         many0((
@@ -123,7 +123,7 @@ fn parse_term(input:&str) -> IResult<&str, ParsedTerm> {
     ).parse(input)
 }
 
-fn parse_expr(input: &str) -> IResult<&str, ParsedExpr> {
+fn parse_expr(input: &str) -> IResult<&str, ParsedExpr<'_>> {
     (
         parse_term,
         many0((
